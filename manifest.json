@@ -17,7 +17,7 @@
     "http://www.google.com/*",
     "http://finance.console.ismbao.com.cn/*"
   ],
-  "background": { "scripts": ["jquery.min.js","lib/message.js","background.js"] },
+  "background": { "scripts": ["jquery.min.js","lib/message.js","lib/Robot.js","background.js"] },
 
   "omnibox":{ "keyword" : "heping" },
   "icons": {

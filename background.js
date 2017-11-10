@@ -21,37 +21,24 @@
 	});
 
 	chrome.omnibox.onInputEntered.addListener(function(text) {
-		var apiKey = "9064e65b28c849fc9d4d4dca178e8b77";
-		var data = {
-			key:apiKey,
-			info:text,
-			userid:"123456"
-		};
-        $.ajax({
-            type: "POST",
-            url: "http://www.tuling123.com/openapi/api",
-            data:data,
-            dataType: "json",
-            success: function(data){
-            	//todo 文本类
-                if(data.code == 100000){
-                    show(data.text);
-				}
-				//todo 链接类
-				if(data.code == 200000){
+		new Robot().chatMessage(text,function (data) {
+            //todo 文本类
+            if(data.code == 100000){
+                show(data.text);
+            }
+            //todo 链接类
+            if(data.code == 200000){
 
-				}
-				//todo  新闻类
-                if(data.code == 200000){
+            }
+            //todo  新闻类
+            if(data.code == 200000){
 
-                }
-                //todo 菜谱类
-                if(data.code == 200000){
+            }
+            //todo 菜谱类
+            if(data.code == 200000){
 
-                }
             }
         });
-
 	});
 
 	chrome.browserAction.onClicked.addListener(function(tab) {
