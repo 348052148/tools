@@ -11,13 +11,26 @@ window.onload=function () {
     var Vm = new Vue({
         el:'#app',
         data:{
+            id:0,
+            title:'',
             message:'',
             timer:6, //时间
             msg_fps:3, //消息 频率
             nickname: '来自老公的关心',
-            currentPage:1
+            currentPage:1,
+            qmessage:null
         },
         created:function () {
+            if(this.currentPage == 1) this.title = '聊天';
+            if(this.currentPage == 2) this.title = '音乐';
+            if(this.currentPage == 3) this.title = '时间';
+            if(this.currentPage == 4) this.title = '更多';
+            if(this.currentPage == 5) this.title = '设置';
+
+            if(localStorage.id){
+                this.id = localStorage.id
+            }
+
             if(localStorage.timer){
                 this.timer = localStorage.timer / 1000 / 60;
             }
@@ -27,16 +40,13 @@ window.onload=function () {
             if(localStorage.nickname){
                 this.nickname = localStorage.nickname;
             }
+
+            this.qmessage = new Message();
         },
         methods:{
             sendMessage:function () {
-                $.ajax({
-                    type: "GET",
-                    url: "http://chat.console.ismbao.com.cn/test/setData/"+this.message+"/20",
-                    dataType: "json",
-                    success: function(data){
-                        Vm.message = '';
-                    }
+                this.qmessage.sendMessage(this.id,this.nickname,this.message,function (data) {
+                    Vm.message = '';
                 });
             },
             setAttr:function () {
@@ -54,6 +64,11 @@ window.onload=function () {
             },
             handleSelect:function (key, keyPath) {
                 this.currentPage = key;
+                if(this.currentPage == 1) this.title = '聊天';
+                if(this.currentPage == 2) this.title = '音乐';
+                if(this.currentPage == 3) this.title = '时间';
+                if(this.currentPage == 4) this.title = '更多';
+                if(this.currentPage == 5) this.title = '设置';
             }
         },
         computed: {

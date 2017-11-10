@@ -7,7 +7,8 @@
 	    body: text
 	  });
 }
-	
+
+
 	
 	//chrome.browserAction.setBadgeText({text:'HP'});
 	
@@ -20,7 +21,37 @@
 	});
 
 	chrome.omnibox.onInputEntered.addListener(function(text) {
-		show('你搜索了关键字');
+		var apiKey = "9064e65b28c849fc9d4d4dca178e8b77";
+		var data = {
+			key:apiKey,
+			info:text,
+			userid:"123456"
+		};
+        $.ajax({
+            type: "POST",
+            url: "http://www.tuling123.com/openapi/api",
+            data:data,
+            dataType: "json",
+            success: function(data){
+            	//todo 文本类
+                if(data.code == 100000){
+                    show(data.text);
+				}
+				//todo 链接类
+				if(data.code == 200000){
+
+				}
+				//todo  新闻类
+                if(data.code == 200000){
+
+                }
+                //todo 菜谱类
+                if(data.code == 200000){
+
+                }
+            }
+        });
+
 	});
 
 	chrome.browserAction.onClicked.addListener(function(tab) {
@@ -30,31 +61,35 @@
 	var nickname = (localStorage.nickname)?localStorage.nickname:"来自老公的关心";
 
 	if(!localStorage.timer) localStorage.timer = 1800000;
-	
-	// Test for notification support.
-	if (window.Notification) {
-		
-	  setInterval(function() {
-	
-	    if ( localStorage.isActivated ) {
-	      show('时间到了请注意休息-'+nickname);
-	    }
-	  }, localStorage.timer);
-	}
-	
-	setInterval(function(){
-	$.ajax({
-            type: "GET",
-            url: "http://chat.console.ismbao.com.cn/test/getData/20",
-            dataType: "json",
-            success: function(data){
-				if(data.status){
-						new Notification('发送消息', {
-							icon: 'images/avatar.jpg',
-							body: data.info+'-'+nickname
-						});
-				}
-                
-            }
-        });
-	},localStorage.msg_fps);
+
+	if(!localStorage.msg_fps) localStorage.msg_fps = 2000;
+
+	var qmessage = new Message();
+
+	qmessage.connect(nickname,function (data) {
+        localStorage.id = data.userInfo.id;
+
+        //todo 通知休息逻辑
+        if (window.Notification) {
+
+            setInterval(function() {
+
+                if ( localStorage.isActivated ) {
+                    show('时间到了请注意休息-'+nickname);
+                }
+            }, localStorage.timer);
+        }
+		//todo 接受消息逻辑
+        setInterval(function(){
+            qmessage.receiveMessage(data.userInfo.id,function (data) {
+                if(data.status){
+                    new Notification('发送消息', {
+                        icon: 'images/avatar.jpg',
+                        body: data.info+'-'+data.nickname
+                    });
+                }
+            });
+        },localStorage.msg_fps);
+
+
+    });
