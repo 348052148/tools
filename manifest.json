@@ -1,0 +1,41 @@
+﻿{
+  "name": "Hepin",
+  "version" : "1.0",
+  "manifest_version" :2,
+  "minimum_chrome_version":"5.0.316.0",
+  "browser_action" : {
+	"default_icon" : "images/icon19.png",
+	"default_title" : "Hepin",
+	"default_popup" : "popup.html"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "permissions" : [
+	"notifications",
+    "tabs",
+	"http://chat.ismbao.com.cn/",
+    "https://unpkg.com/",
+    "http://www.google.com/*",
+    "http://finance.console.ismbao.com.cn/*"
+  ],
+  "background": { "scripts": ["jquery.min.js","background.js"] },
+
+  "omnibox":{ "keyword" : "http" },
+  "icons": {
+    "16": "images/icon19.png"
+  },
+
+  "content_scripts" : [
+    {
+      "matches": ["http://www.google.com/*","http://finance.console.ismbao.com.cn/*"],
+      "css": ["lib/index.css"],
+      "js": ["jquery.min.js", "content.js"]
+    }
+  ]
+
+//  "page_action":{
+//    "default_icon": "images/icon19.png",
+//    "default_title": "Do action",
+//    "default_popup": "popup.html"
+//  }
+
+}
