@@ -18,8 +18,35 @@ cavans.mouseup(function () {
 cavans.mousedown(function () {
     i=true;
 });
-cavans.click(function () {
-        layer.msg('hello');
+$(document).keydown(function (event) {
+    var robot = new Robot();
+    //insert件
+    if(event.keyCode == 45){
+        //layer.alert(event.keyCode);
+
+        layer.tab({
+            area: ['600px', '300px'],
+            tab: [{
+                title: '问答',
+                content: '<input type="text" id="quest" /></br><button id="quest_ok">提问</button>'
+            }, {
+                title: '聊天',
+                content: '内容2'
+            }, {
+                title: '音乐',
+                content: '内容3'
+            }]
+        });
+        $('#quest_ok').click(function () {
+            robot.chatMessage($('#quest').val(),function (data) {
+                layer.alert(data.text, {
+                    skin: 'layui-layer-molv' //样式类名
+                    ,closeBtn: 0,
+                    anim: 4
+                });
+            });
+        });
+    }
 });
 
 var pWidth = $('body').width();
