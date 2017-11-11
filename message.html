@@ -3,8 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="jquery.min.js"></script>
 </head>
 <body>
-    消息
+    <img id="pople" style="position: absolute;" src="images/pople.jpg" width="100" />
 </body>
+<script>
+    var i = false;
+    $("body").mousemove(function (event) {
+        if(i){
+            $("#pople").css({"top":event.clientY});
+            $("#pople").css({"left":event.clientX});
+        }
+    });
+    $("#pople").mousedown(function () {
+        i=true;
+    });
+    $("#pople").mouseup(function () {
+        i=false;
+    });
+</script>
 </html>

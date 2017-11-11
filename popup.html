@@ -57,6 +57,21 @@
 				font-size: 12px;
 				font-weight: 400;
 			}
+
+
+			.robotclass{
+
+			}
+			.robotclass h4{
+				color:#e64242;
+				font-weight: 400;
+				font-size: 12px;
+			}
+			.robotclass span,a{
+				color: #1f2d3d;
+				font-size: 14px;
+				line-height: 14px;
+			}
 		</style>
 		<script src="jquery.min.js"></script>
 		<script src="lib/vue.js"></script>
@@ -83,7 +98,7 @@
 
 										<el-menu-item index="1"><i class="el-icon-message"></i>聊天</el-menu-item>
 										<el-menu-item index="2"><i class="el-icon-star-on"></i>音乐</el-menu-item>
-										<el-menu-item index="3"><i class="el-icon-time"></i>时间</el-menu-item>
+										<el-menu-item index="3"><i class="el-icon-time"></i>问答</el-menu-item>
 
 									</el-submenu>
 									<el-menu-item index="4">
@@ -118,7 +133,68 @@
 
 								<div id="page2"  v-if="currentPage == 2"></div>
 
-								<div id="page3"  v-if="currentPage == 3"></div>
+								<div id="page3"  v-if="currentPage == 3">
+
+									<div style="width: 380px;height: 200px;background-color: #fff; overflow-y: scroll;">
+										<el-row v-if="robot_info_list">
+											<template v-for="(robot_info,index) in robot_info_list">
+
+												<div class="robotclass" v-if="robot_info.type == 'text'">
+													<h4>平平机器人text</h4>
+													<div class="content">
+														<span>{{robot_info.info}}</span>
+													</div>
+												</div>
+
+												<div class="robotclass" v-if="robot_info.type == 'url'">
+													<h4>平平机器人url</h4>
+													<div class="content">
+														<span>{{robot_info.info}}</span>
+														<a :href="robot_info.url" @click="openLink(robot_info.url)">连接</a>
+													</div>
+												</div>
+
+												<div class="robotclass" v-if="robot_info.type == 'news'">
+													<h4>平平机器人news</h4>
+													<div class="content">
+														<span>{{robot_info.info}}</span>
+														<ul v-for="news in robot_info.list">
+															<li><h5>{{news.article}}</h5></li>
+															<li>{{news.icon}}</li>
+															<li>{{news.source}}</li>
+															<li><img :src="news.source"></li>
+															<li>{{news.detailurl}}</li>
+														</ul>
+													</div>
+												</div>
+
+												<div class="robotclass" v-if="robot_info.type == 'food'">
+													<h4>平平机器人news</h4>
+													<div class="content">
+														<span>{{robot_info.info}}</span>
+														<ul v-for="news in robot_info.list">
+															<li><h5>{{news.name}}</h5></li>
+															<li>{{news.icon}}</li>
+															<li>{{news.info}}</li>
+															<li><a :href="news.detailurl" @click="openLink(news.detailurl)" >连接</a></li>
+														</ul>
+													</div>
+												</div>
+
+											</template>
+										</el-row>
+									</div>
+
+									<el-row style="margin-top: 10px;">
+										<el-col :span="2"><i class="el-icon-message"></i></el-col>
+										<el-col :span="20"><el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6}" size="small" v-model="problem"></el-input></el-col>
+									</el-row>
+									<el-row style="margin-top: 10px;">
+										<el-col :span="20">--------------------------------------------</el-col>
+										<el-col :span="1"><el-button type="primary" size="small" @click="sendQuestion" @keydown.enter="sendQuestion">发送</el-button></el-col>
+									</el-row>
+
+								</div>
 
 								<div id="page4"  v-if="currentPage == 4"></div>
 
@@ -148,5 +224,6 @@
 	</body>
 	<script src="lib/element-ui/lib/index.js"></script>
 	<script src="lib/message.js"></script>
+	<script src="lib/Robot.js"></script>
 	<script src="popup.js" ></script>
 </html>

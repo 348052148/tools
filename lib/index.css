@@ -1,0 +1,17 @@
+
+#canvas {
+    position: absolute;
+    border-radius:60px;
+    display:block;
+    z-index: 10000;
+    left: 100px;
+    top:100px;
+    width: 60px;
+    background: #eee;
+}
+#canvas:hover{
+    cursor: move;
+}
+#canvas canvas{
+    border-radius:60px;
+}

@@ -26,9 +26,9 @@
 
   "content_scripts" : [
     {
-      "matches": ["http://www.google.com/*","http://finance.console.ismbao.com.cn/*"],
-      "css": ["lib/index.css"],
-      "js": ["jquery.min.js","lib/message.js", "content.js"]
+      "matches": ["http://*/*","https://*/*"],
+      "css": ["lib/index.css","lib/layer/theme/default/layer.css"],
+      "js": ["jquery.min.js","lib/message.js","lib/draw.js","lib/layer/layer.js", "content.js"]
     }
   ]
 
