@@ -4,23 +4,61 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="jquery.min.js"></script>
+    <script src="lib/layer/layer.js"></script>
+    <style>
+
+    </style>
 </head>
 <body>
-    <img id="pople" style="position: absolute;" src="images/pople.jpg" width="100" />
+    <div>
+        <textarea></textarea>
+        <button></button>
+    </div>
 </body>
 <script>
-    var i = false;
-    $("body").mousemove(function (event) {
-        if(i){
-            $("#pople").css({"top":event.clientY});
-            $("#pople").css({"left":event.clientX});
+    var is_Ctrl = false;
+    $(document).keydown(function (event) {
+        if(event.keyCode == 17){
+            is_Ctrl = true;
         }
+
+        if(is_Ctrl && event.keyCode == 13){
+            alert('fasong');
+        }
+        //insert件
+        if(event.keyCode == 45){
+            //layer.alert(event.keyCode);
+            var chat =$('<div id="chat">\n' +
+                '        <textarea></textarea>\n' +
+                '    </div>');
+
+            chat.find('textarea').css({'width':'523px','height':'205px','resize':'none'});
+
+
+            var robot = $('<div>\n' +
+                '        <textarea id="quest"></textarea>\n' +
+                '        <button id="quest_ok">提问</button>\n' +
+                '    </div>');
+            robot.find('textarea').css({'width':'523px','height':'180px','resize':'none'});
+
+            layer.tab({
+                area: ['600px', '300px'],
+                tab: [ {
+                    title: '聊天',
+                    content: chat.html()
+                },{
+                    title: '问答',
+                    content: robot.html()
+                }, {
+                    title: '音乐',
+                    content: '内容3'
+                }]
+            });
+        }
+
     });
-    $("#pople").mousedown(function () {
-        i=true;
-    });
-    $("#pople").mouseup(function () {
-        i=false;
+    $(document).keyup(function (event) {
+            is_Ctrl = false;
     });
 </script>
 </html>

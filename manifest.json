@@ -17,7 +17,7 @@
     "http://www.google.com/*",
     "http://finance.console.ismbao.com.cn/*"
   ],
-  "background": { "scripts": ["jquery.min.js","lib/message.js","lib/Robot.js","background.js"] },
+  "background": { "scripts": ["jquery.min.js","lib/message.js","lib/Robot.js","lib/core.js","background.js"] },
 
   "omnibox":{ "keyword" : "heping" },
   "icons": {
@@ -28,7 +28,7 @@
     {
       "matches": ["http://*/*","https://*/*"],
       "css": ["lib/index.css","lib/layer/theme/default/layer.css"],
-      "js": ["jquery.min.js","lib/message.js","lib/draw.js","lib/layer/layer.js","lib/Robot.js", "content.js"]
+      "js": ["jquery.min.js","lib/message.js","lib/draw.js","lib/layer/layer.js","lib/Robot.js","lib/core.js", "content.js"]
     }
   ]
 

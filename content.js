@@ -18,27 +18,78 @@ cavans.mouseup(function () {
 cavans.mousedown(function () {
     i=true;
 });
-$(document).keydown(function (event) {
-    var robot = new Robot();
-    //insert件
-    if(event.keyCode == 45){
-        //layer.alert(event.keyCode);
 
-        layer.tab({
+
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+    //初始化
+    if(request.type == 'init'){
+        localStorage.id = request.id;
+        sendResponse({status:true});
+    }
+});
+
+var is_Ctrl = false;
+// var qmessage = new Message();
+var layerId = 0;
+var is_load = false;
+$(document).keydown(function (event) {
+
+    if(event.keyCode==27){
+        is_load = false;
+        layer.close(layerId);
+    }
+
+    if(event.keyCode == 17){
+        is_Ctrl = true;
+    }
+
+    if(is_Ctrl && event.keyCode == 13){
+        var message = $('#msg').val();
+        // qmessage.sendMessage(localStorage.id,localStorage.nickname,message,function (data) {
+        //     $('#msg').val('');
+        // });
+        chrome.extension.sendRequest({message: message}, function(response) {});
+
+    }
+    //insert件
+    if(event.keyCode == 45 && is_load ==false){
+        //layer.alert(event.keyCode);
+        var chat =$('<div id="chat">\n' +
+            '        <textarea id="msg"></textarea>\n' +
+            '    </div>');
+
+        chat.find('textarea').css({'width':'523px','height':'205px','resize':'none','border':'1px #eee solid'});
+
+        chat.focus();
+
+
+
+
+        var robot = $('<div>\n' +
+            '        <textarea id="quest"></textarea>\n' +
+            '        <button id="quest_ok">提问</button>\n' +
+            '    </div>');
+
+        robot.find('textarea').css({'width':'523px','height':'180px','resize':'none','border':'1px #eee solid'});
+
+        $('.layui-layer-content').css({'position':'none'});
+
+        layerId = layer.tab({
             area: ['600px', '300px'],
-            tab: [{
-                title: '问答',
-                content: '<input type="text" id="quest" /></br><button id="quest_ok">提问</button>'
-            }, {
+            tab: [ {
                 title: '聊天',
-                content: '内容2'
+                content: chat.html()
+            },{
+                title: '问答',
+                content: robot.html()
             }, {
                 title: '音乐',
                 content: '内容3'
             }]
         });
+        var robotObj = new Robot();
         $('#quest_ok').click(function () {
-            robot.chatMessage($('#quest').val(),function (data) {
+            robotObj.chatMessage($('#quest').val(),function (data) {
                 layer.alert(data.text, {
                     skin: 'layui-layer-molv' //样式类名
                     ,closeBtn: 0,
@@ -46,8 +97,15 @@ $(document).keydown(function (event) {
                 });
             });
         });
+
+        is_load = true;
     }
+
 });
+$(document).keyup(function (event) {
+    is_Ctrl = false;
+});
+
 
 var pWidth = $('body').width();
 var pHeight = window.innerHeight;
