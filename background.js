@@ -78,7 +78,7 @@
     //todo websocket
     var socketClient = new SocketClient();
 
-    socketClient.setServerOption({ip:'192.168.1.22',port:8181});
+    socketClient.setServerOption({ip:'47.92.98.69',port:8181});
 
     var scene = new NQScene(socketClient);
 
