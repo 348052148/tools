@@ -102,7 +102,82 @@
 
     //接受发送消息
     chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-        socketClient.send(request.message);
+        if(request.type == 'chat'){
+            socketClient.send(request.message);
+        }
+        if(request.type == 'translate'){
+
+            var appid = '20171122000098654';
+            var key = 'l8BptNrr5nbPF3VsYDKi';
+            var salt = (new Date).getTime();
+            var query = request.query;
+            // 多个query可以用\n连接  如 query='apple\norange\nbanana\npear'
+            var from = 'en';
+            var to = 'zh';
+
+            var str1 = appid + query + salt +key;
+            var sign = MD5(str1);
+            $.ajax({
+                url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    q: query,
+                    appid: appid,
+                    salt: salt,
+                    from: from,
+                    to: to,
+                    sign: sign
+                },
+                success: function (data) {
+                    chrome.tabs.sendRequest(TabId, {type:'translate',data:data}, function (response) {
+
+                    });
+                }
+            });
+        }
+        if(request.type == 'retime_translate'){
+
+            var appid = '20171122000098654';
+            var key = 'l8BptNrr5nbPF3VsYDKi';
+            var salt = (new Date).getTime();
+            var query = request.query;
+            // 多个query可以用\n连接  如 query='apple\norange\nbanana\npear'
+
+            var from = 'zh';
+            var to = 'en';
+
+            if(request.transelate_mode == '2'){
+                from = 'en';
+                to = 'zh';
+            }
+
+            var str1 = appid + query + salt +key;
+            var sign = MD5(str1);
+            $.ajax({
+                url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    q: query,
+                    appid: appid,
+                    salt: salt,
+                    from: from,
+                    to: to,
+                    sign: sign
+                },
+                success: function (data) {
+
+                    sendResponse({type:'retime_translate',data:data});
+
+                    // chrome.tabs.sendRequest(TabId, {type:'translate',data:data}, function (response) {
+                    //
+                    // });
+                }
+            });
+
+
+        }
     });
 
 
