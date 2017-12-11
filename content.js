@@ -57,6 +57,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
 $(document).keydown(function (event) {
 
+    if(is_Shift && event.keyCode == 81){
+        handleShift();
+    }
+
     if(event.keyCode==27){
         is_load = false;
         layer.close(layerId);
@@ -66,7 +70,6 @@ $(document).keydown(function (event) {
         is_Ctrl = true;
     }
     if(event.keyCode == 16){
-        handleShift();
         is_Shift = true;
     }
 
@@ -148,8 +151,13 @@ $(document).keydown(function (event) {
 
 });
 $(document).keyup(function (event) {
-    is_Ctrl = false;
-    is_Shift = false;
+    if(event.keyCode == 16){
+        is_Shift = false;
+    }
+    if(event.keyCode == 17){
+        is_Ctrl = false;
+    }
+
 });
 
 
