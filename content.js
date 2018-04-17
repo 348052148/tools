@@ -84,30 +84,23 @@ $(document).keydown(function (event) {
     //insert件
     if(event.keyCode == 45 && is_load ==false){
         //layer.alert(event.keyCode);
-
-        var chat = ChatView();
-
-        chat.focus();
-
-
-
+        
         var robot = RobotView();
 
         var transelate = TranselateView();
+
+        transelate.focus();
 
         $('.layui-layer-content').css({'position':'none'});
 
         layerId = layer.tab({
             area: ['600px', '300px'],
             tab: [ {
-                title: '聊天',
-                content: chat.html()
+                title: '翻译',
+                content: transelate.html()
             },{
                 title: '问答',
                 content: robot.html()
-            }, {
-                title: '翻译',
-                content: transelate.html()
             }]
         });
 
