@@ -30,7 +30,7 @@
       "css": ["lib/index.css","lib/layer/theme/default/layer.css","/dist/main.css"],
       "js": ["lib/jquery.min.js","lib/layer/layer.js",
         "lib/common/message.js","lib/common/draw.js","lib/common/md5.js", "lib/common/Robot.js","lib/common/core.js",
-        "lib/func.js","lib/view.js","lib/assistant.js","./dist/main.js"
+        "lib/func.js","lib/view.js","lib/assistant.js","content.js"
         ]
     }
   ]

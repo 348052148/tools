@@ -5,13 +5,13 @@ webpackJsonp([7],{
 
 
 /* styles */
-__webpack_require__(43)
+__webpack_require__(44)
 
 var Component = __webpack_require__(12)(
   /* script */
-  __webpack_require__(29),
+  __webpack_require__(31),
   /* template */
-  __webpack_require__(51),
+  __webpack_require__(54),
   /* scopeId */
   "data-v-5c561f39",
   /* cssModules */
@@ -39,12 +39,11 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 29:
+/***/ 31:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__libs_socket_js__ = __webpack_require__(3);
 //
 //
 //
@@ -169,8 +168,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-
+//import socket from '../libs/socket.js';
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        // 父组件提供请求地址
+        socket: {
+            type: Object,
+            default: ''
+        }
+    },
     data: function data() {
         return {
             edit: false,
@@ -181,7 +187,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        __WEBPACK_IMPORTED_MODULE_0__libs_socket_js__["a" /* default */].request('system.app.list', {}, function (res) {
+        this.socket.request('system.app.list', {}, function (res) {
             console.log(res.data.list);
             _this.appLst = res.data.list;
         });
@@ -196,14 +202,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 43:
+/***/ 44:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 51:
+/***/ 54:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

@@ -464,7 +464,7 @@ var routers = [{
     }
 }, {
     name: 'brow',
-    path: '/brow',
+    path: '/brow/:components',
     meta: {
         title: ''
     },
@@ -687,7 +687,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
             this.title = App.name;
             if (App) if (App.components) {
-                this.$router.push({ name: 'brow', params: { components: App.components } });
+                console.log(App.components);
+                this.$router.replace({ path: '/brow/' + encodeURIComponent(App.components), params: { components: App.components } });
             } else {
                 this.$router.push({ path: App.path });
             }
